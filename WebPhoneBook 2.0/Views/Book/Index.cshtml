@@ -1,0 +1,54 @@
+﻿@model IndexModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    <h1 class="display-4">Записная книжка</h1>
+</div>
+
+<table class="table">
+            <th ad class="thead-light"></th>
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Отчество</th>
+                    <th>Номер телефона</th>
+                    <th>Адрес жительства</th>
+                    <th>Описание</th>
+                   </tr>
+                @foreach (var item in Model.Contacts)
+                {
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("Person", new { id = item.Id } )">@item.Id</a>
+                            
+                            @*<a asp-area="" asp-controller="Book" asp-action="Person" asp-fragment="@item.Id">@item.Id</a>*@
+                            @*<a href='@Url.Page("/Person", "1")'>ссылка</a>*@
+                            @*<a href='@Url.Page("/Person", new {id=item.Id.ToString()})'>@item.Id</a>*@
+                            @*@item.Id*@
+                                @*@Html.DisplayFor(modelItem => item.Id)*@
+                        </td>   
+                        <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                                @Html.DisplayFor(modelItem => item.MiddleName)
+                        </td>
+                        <td>
+                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
