@@ -13,9 +13,10 @@ namespace WebPhoneBook_2._0.Models
         {
             
         }
-        public IndexModel() {
-        }
-        
+
+        /// <summary>
+        /// Общая БД
+        /// </summary>   
         public List<Person> Contacts { get; set; }
 
       

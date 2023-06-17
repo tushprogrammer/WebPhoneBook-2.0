@@ -1,15 +1,12 @@
 ﻿@model PersonModel
-@*@{
-    ViewData["Title"] = "Person Page";
-}*@
+
 
 <div class="text-center">
-    <h1 class="display-4">Конкретный контакт</h1>
+    <h1 class="display-4">@Model.Person.LastName @Model.Person.Name @Model.Person.MiddleName</h1>
 </div>
 
 <div class="person">
-        <h2>Контакт: @Model.Person.LastName @Model.Person.Name @Model.Person.MiddleName</h2>
-        <div>Номер телефона: @Model.Person.PhoneNumber</div>
-        <div>Адрес: @Model.Person.Address</div>
-        <div>Описание: @Model.Person.Description</div>
+    <p>Номер телефона: @Model.Person.PhoneNumber</p>
+    <p>Адрес: @Model.Person.Address 12</p>
+    <p>Описание: @Model.Person.Description</p>
 </div>

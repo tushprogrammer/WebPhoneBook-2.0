@@ -16,7 +16,7 @@ namespace WebPhoneBook_2._0.Controllers
         List<Person> Persons;
         public IActionResult Index()
         {
-            Console.WriteLine("какой нибудь текст, о том, что сработал метод index book");
+            
             Persons = GetPersonsFromDatabase();
             IndexModel model = new IndexModel
             {
@@ -29,7 +29,6 @@ namespace WebPhoneBook_2._0.Controllers
 
         public IActionResult Person(string id)
         {
-            Console.WriteLine("какой нибудь текст, о том, что сработал метод Person book");
             int h_id = Convert.ToInt32(id);
             Persons = GetPersonsFromDatabase();
             PersonModel personModel = new PersonModel

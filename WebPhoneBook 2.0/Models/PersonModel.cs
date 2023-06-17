@@ -7,6 +7,7 @@ namespace WebPhoneBook_2._0.Models
     {
         public void OnGet(string id)
         {
+            //текст сам не выводится в консоль, но без этого текста не открывается новая страница
             Console.WriteLine("OnGet() PersonModel" + id);
         }
         /// <summary>
