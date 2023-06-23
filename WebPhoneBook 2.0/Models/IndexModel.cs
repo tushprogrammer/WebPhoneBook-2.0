@@ -19,7 +19,7 @@ namespace WebPhoneBook_2._0.Models
         /// </summary>   
         public List<Person> Contacts { get; set; }
 
-      
+        
 
 
     }
