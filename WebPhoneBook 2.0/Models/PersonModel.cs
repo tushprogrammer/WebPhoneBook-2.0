@@ -5,10 +5,10 @@ namespace WebPhoneBook_2._0.Models
 {
     public class PersonModel : PageModel
     {
-        public void OnGet(string id)
+        public void OnGet()
         {
             //текст сам не выводится в консоль, но без этого текста не открывается новая страница
-            Console.WriteLine("OnGet() PersonModel" + id);
+            Console.WriteLine("OnGet() PersonModel");
         }
         /// <summary>
         /// Конкретный человек, которого открыли

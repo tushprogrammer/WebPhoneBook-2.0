@@ -12,6 +12,8 @@ using WebPhoneBook_2._0.Entitys;
 using WebPhoneBook_2._0.ContextFolder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.AspNetCore.Mvc.Core.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebPhoneBook_2._0.Controllers
 {
@@ -48,11 +50,29 @@ namespace WebPhoneBook_2._0.Controllers
             return View("Person", personModel);
         }
 
-        [HttpDelete]
+        /// <summary>
+        /// Метод обработки кнопки удаления контакта
+        /// </summary>
+        /// <param name="id">Идентификатор контакта</param>
+        /// <returns></returns>
+        //[HttpDelete("{id}")]
+        [HttpGet]
         public IActionResult DeletePerson(int id)
         {
-
-            return View();
+            //по хорошему сделать отдельный класс, где будет логика, и там уже 
+            using (PersonContext newcontext = new PersonContext())
+            {
+                Person PersonDelete = newcontext.Persons.Where(x => x.Id == id).First();
+                newcontext.Persons.Remove(PersonDelete);
+                newcontext.SaveChanges();
+            }
+            //return View(); //после удаления, обновление страницы
+            return Ok(); //возврат статуса 200
+        }
+        public IActionResult AddPerson(int id)
+        {
+            //открытие новой страницы 
+            return View(); 
         }
 
         /// <summary>

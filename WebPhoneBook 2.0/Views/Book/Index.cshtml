@@ -14,8 +14,8 @@
                 </tr>
             </thead>
             <tbody>
-                
-                @foreach (var item in Model.Contacts)
+
+        @foreach (Person item in ViewBag.PersonsContext)
                 {
                     <tr>
                         <td>
@@ -31,9 +31,16 @@
                                 @Html.DisplayFor(modelItem => item.MiddleName)
                         </td>
                         <td>
-                                <form action="" method="delete">
-
-                                </form>
+                            <a asp-action="DeletePerson" asp-route-id="@item.Id" asp-controller="Book">Удалить</a>
+                            @*<form action="DeletePerson(@item.Id)" method="delete">
+                                <input type="submit" value="Удалить">
+                            </form>*@
+                        </td>
+                        <td>
+                            <a asp-action="AddPerson" asp-route-id="@item.Id" asp-controller="Book">Изменить</a>
+                            @*<form action="AddPerson(@item.Id)" method="put">
+                                <input type="submit" value="Добавить">
+                            </form>*@
                         </td>
                     </tr>
                 }
