@@ -1,0 +1,21 @@
+﻿
+<div class="text-center">
+    <h1 class="display-4">Добавление нового контакта</h1>
+</div>
+
+<div class="person">
+        
+        <form action="~/Book/AddNewPerson" method="post">
+            <label>Фамилия:</label>       <input type="text" name="LastName" /><br />
+            <label>Имя: </label>          <input type="text" name="Name" /><br />
+            <label>Отчество</label>       <input type="text" name="MiddleName" /><br />
+            <label>Номер телефона:</label><input type="text" name="PhoneNumber"/><br />
+            <label>Адрес: </label>        <input type="text" name="Address"/><br />
+            <label>Описание: </label>     <input type="text" name="Description"/><br />
+            <p><input type="submit" value="Отправить" /></p>
+        </form>
+   
+@*    <p>@Model.Person.PhoneNumber</p>
+    <p>Адрес: @Model.Person.Address</p>
+    <p>Описание: @Model.Person.Description</p>*@
+</div>

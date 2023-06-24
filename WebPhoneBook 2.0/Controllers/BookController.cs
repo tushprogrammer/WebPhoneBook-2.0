@@ -41,13 +41,45 @@ namespace WebPhoneBook_2._0.Controllers
         public IActionResult Person(string id)
         {
             int h_id = Convert.ToInt32(id);
-            Persons = GetPersonsFromDatabase();
+            Persons = new PersonContext().Persons.ToList();
             PersonModel personModel = new PersonModel
             {
-                Contacts = Persons,
                 Person = Persons[h_id - 1]
             };
             return View("Person", personModel);
+        }
+        //вызов страницы
+        public IActionResult PersonDetails()
+        {
+
+            return View();
+        }
+        //вызов страницы
+        public IActionResult AddPerson()
+        {
+            
+            return View();
+        }
+        /// <summary>
+        /// Метод добавления нового контакта
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="LastName"></param>
+        /// <param name="MiddleName"></param>
+        /// <param name="PhoneNumber"></param>
+        /// <param name="Address"></param>
+        /// <param name="Description"></param>
+        /// <returns></returns>
+        public IActionResult AddNewPerson(string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
+        {
+            using (PersonContext context = new PersonContext())
+            {
+                
+                Person NewPerson = new Person(Name, LastName, MiddleName, PhoneNumber, Address, Description);
+                context.Add(NewPerson);
+                context.SaveChanges();
+            }
+            return Redirect("~/"); //возврат к первой странице
         }
 
         /// <summary>
@@ -69,11 +101,7 @@ namespace WebPhoneBook_2._0.Controllers
             //return View(); //после удаления, обновление страницы
             return Ok(); //возврат статуса 200
         }
-        public IActionResult AddPerson(int id)
-        {
-            //открытие новой страницы 
-            return View(); 
-        }
+        
 
         /// <summary>
         /// Метод получение данных из файла (уже не актуально, так как выгрузка напрямую из БД)

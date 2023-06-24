@@ -44,9 +44,10 @@ namespace WebPhoneBook_2._0
         public string Description { get { return description; } set { description = value; } }
 
         [JsonConstructor]
-        public Person(int Id, string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
+        public Person(string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
         {
-            id = Id;
+            //id уже не нужно присваивать в конструкторе, так как это произойдет автоматически при добавлении в БД
+            //id = Id; 
             name = Name;
             lastname = LastName;
             middlename = MiddleName;
