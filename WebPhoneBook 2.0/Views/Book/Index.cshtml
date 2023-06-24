@@ -11,6 +11,7 @@
                     <th>Имя</th>
                     <th>Фамилия</th>
                     <th>Отчество</th>
+                    <th>Дополнительно</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,16 +33,12 @@
                         </td>
                         <td>
                             <a asp-action="DeletePerson" asp-route-id="@item.Id" asp-controller="Book">Удалить</a>
+                            <a asp-action="EditPerson" asp-route-id="@item.Id" asp-controller="Book">Изменить</a>
                             @*<form action="DeletePerson(@item.Id)" method="delete">
                                 <input type="submit" value="Удалить">
                             </form>*@
                         </td>
-                        <td>
-                            <a asp-action="ChangePerson" asp-route-id="@item.Id" asp-controller="Book">Изменить</a>
-                            @*<form action="AddPerson(@item.Id)" method="put">
-                                <input type="submit" value="Добавить">
-                            </form>*@
-                        </td>
+                      
                     </tr>
                 }
             </tbody>

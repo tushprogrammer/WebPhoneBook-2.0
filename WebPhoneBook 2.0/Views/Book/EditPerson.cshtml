@@ -1,0 +1,21 @@
+﻿
+<div class="text-center">
+    <h1 class="display-4">Изменение контакта</h1>
+</div>
+
+<div class="person">
+
+    <form action="~/Book/AddNewPerson" method="post">
+        <p>Фамилия:</p>       <input type="text" name="LastName" value="@ViewBag.PersonNow.LastName" /><br />
+        <p>Имя: </p>          <input type="text" name="Name" value="@ViewBag.PersonNow.Name" /><br />
+        <p>Отчество</p>       <input type="text" name="MiddleName" value="@ViewBag.PersonNow.MiddleName" /><br />
+        <p>Номер телефона:</p><input type="text" name="PhoneNumber" value="@ViewBag.PersonNow.PhoneNumber" /><br />
+        <p>Адрес: </p>        <input type="text" name="Address" value="@ViewBag.PersonNow.Address" /><br />
+        <p>Описание: </p>     <input type="text" name="Description" value="@ViewBag.PersonNow.Description" /><br /><br />
+        <p><input type="submit" value="Изменить" /></p>
+    </form>
+
+    @*    <p>@Model.Person.PhoneNumber</p>
+    <p>Адрес: @Model.Person.Address</p>
+    <p>Описание: @Model.Person.Description</p>*@
+</div>

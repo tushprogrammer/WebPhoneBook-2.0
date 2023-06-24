@@ -57,7 +57,12 @@ namespace WebPhoneBook_2._0.Controllers
         //вызов страницы
         public IActionResult AddPerson()
         {
-            
+            return View();
+        }
+        public IActionResult EditPerson(int id)
+        {
+            Persons = new PersonContext().Persons.ToList();
+            ViewBag.PersonNow = Persons[id - 1];
             return View();
         }
         /// <summary>
