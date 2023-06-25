@@ -24,17 +24,8 @@ namespace WebPhoneBook_2._0.Controllers
         //вызов страницы
         public IActionResult Index()
         {
-
-            //Persons = GetPersonsFromDatabase();
             ViewBag.PersonsContext = new PersonContext().Persons;
-    
-            IndexModel model = new IndexModel
-            {
-                Contacts = Persons
-            };
-            return View("Index", model);
-
-
+            return View();
         }
 
         //вызов страницы 
