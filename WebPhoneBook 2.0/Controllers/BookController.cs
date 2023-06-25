@@ -87,7 +87,15 @@ namespace WebPhoneBook_2._0.Controllers
         [HttpGet]
         public IActionResult DeletePerson(int id)
         {
-            //по хорошему сделать отдельный класс, где будет логика, и там уже 
+            DeletePersonContext(id);
+            return Redirect("~/"); //обновление главной страницы
+        }
+        /// <summary>
+        /// Метод удаления конкретного контакта
+        /// </summary>
+        /// <param name="id"></param>
+        private void DeletePersonContext(int id)
+        {
             using (PersonContext newcontext = new PersonContext())
             {
                 Person PersonDelete = newcontext.Persons.Where(x => x.Id == id).First();
