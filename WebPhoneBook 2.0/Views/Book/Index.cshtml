@@ -32,7 +32,7 @@
                                 @Html.DisplayFor(modelItem => item.MiddleName)
                         </td>
                         <td>
-                            <a asp-action="DeletePerson" asp-route-id="@item.Id" asp-controller="Book">Удалить</a>
+                            <a asp-action="DeletePerson" asp-route-id="@item.Id" asp-controller="Book">Удалить</a> |
                             <a asp-action="EditPerson" asp-route-id="@item.Id" asp-controller="Book">Изменить</a>
                             @*<form action="DeletePerson(@item.Id)" method="delete">
                                 <input type="submit" value="Удалить">

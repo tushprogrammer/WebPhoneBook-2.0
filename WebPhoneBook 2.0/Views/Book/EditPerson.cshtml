@@ -5,13 +5,15 @@
 
 <div class="person">
 
-    <form action="~/Book/AddNewPerson" method="post">
-        <p>Фамилия:</p>       <input type="text" name="LastName" value="@ViewBag.PersonNow.LastName" /><br />
-        <p>Имя: </p>          <input type="text" name="Name" value="@ViewBag.PersonNow.Name" /><br />
-        <p>Отчество</p>       <input type="text" name="MiddleName" value="@ViewBag.PersonNow.MiddleName" /><br />
-        <p>Номер телефона:</p><input type="text" name="PhoneNumber" value="@ViewBag.PersonNow.PhoneNumber" /><br />
-        <p>Адрес: </p>        <input type="text" name="Address" value="@ViewBag.PersonNow.Address" /><br />
-        <p>Описание: </p>     <input type="text" name="Description" value="@ViewBag.PersonNow.Description" /><br /><br />
+    <form action="~/Book/EditPersonContext" method="post">
+
+        <input type="text" name="id" value="@ViewBag.PersonNow.Id" style="display: none" /><br />
+        <p>Фамилия:</p>       <input type="text" name="NewLastName" value="@ViewBag.PersonNow.LastName" /><br />
+        <p>Имя: </p>          <input type="text" name="NewName" value="@ViewBag.PersonNow.Name" /><br />
+        <p>Отчество</p>       <input type="text" name="NewMiddleName" value="@ViewBag.PersonNow.MiddleName" /><br />
+        <p>Номер телефона:</p><input type="text" name="NewPhoneNumber" value="@ViewBag.PersonNow.PhoneNumber" /><br />
+        <p>Адрес: </p>        <input type="text" name="NewAddress" value="@ViewBag.PersonNow.Address" /><br />
+        <p>Описание: </p>     <input type="text" name="NewDescription" value="@ViewBag.PersonNow.Description" /><br /><br />
         <p><input type="submit" value="Изменить" /></p>
     </form>
 

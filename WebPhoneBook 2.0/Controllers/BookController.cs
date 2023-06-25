@@ -21,14 +21,14 @@ namespace WebPhoneBook_2._0.Controllers
     {
         List<Person> Persons;
 
-        //вызов страницы
+        //вызов базовой страницы
         public IActionResult Index()
         {
             ViewBag.PersonsContext = new PersonContext().Persons;
             return View();
         }
 
-        //вызов страницы 
+        //вызов страницы контакта 
         public IActionResult Person(string id)
         {
             int h_id = Convert.ToInt32(id);
@@ -39,23 +39,21 @@ namespace WebPhoneBook_2._0.Controllers
             };
             return View("Person", personModel);
         }
-        //вызов страницы
-        public IActionResult PersonDetails()
-        {
-
-            return View();
-        }
-        //вызов страницы
+        //вызов страницы добавления контакта
         public IActionResult AddPerson()
         {
             return View();
         }
+        //вызов страницы изменения контакта
         public IActionResult EditPerson(int id)
         {
             Persons = new PersonContext().Persons.ToList();
-            ViewBag.PersonNow = Persons[id - 1];
+            Person personNow
+                = Persons[id-1];
+            ViewBag.PersonNow = personNow;
             return View();
         }
+
         /// <summary>
         /// Метод добавления нового контакта
         /// </summary>
@@ -66,12 +64,13 @@ namespace WebPhoneBook_2._0.Controllers
         /// <param name="Address"></param>
         /// <param name="Description"></param>
         /// <returns></returns>
-        public IActionResult AddNewPerson(string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
+        public IActionResult AddNewPerson(string Name, string LastName, string MiddleName, 
+            string PhoneNumber, string Address, string Description)
         {
             using (PersonContext context = new PersonContext())
             {
-                
-                Person NewPerson = new Person(Name, LastName, MiddleName, PhoneNumber, Address, Description);
+                Person NewPerson = new Person(Name, LastName, MiddleName, 
+                    PhoneNumber, Address, Description);
                 context.Add(NewPerson);
                 context.SaveChanges();
             }
@@ -79,7 +78,35 @@ namespace WebPhoneBook_2._0.Controllers
         }
 
         /// <summary>
-        /// Метод обработки кнопки удаления контакта
+        /// Метод изменения данных контакта
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="NewName"></param>
+        /// <param name="NewLastName"></param>
+        /// <param name="NewMiddleName"></param>
+        /// <param name="NewPhoneNumber"></param>
+        /// <param name="NewAddress"></param>
+        /// <param name="NewDescription"></param>
+        /// <returns></returns>
+        public IActionResult EditPersonContext(int id, string NewName, string NewLastName, string NewMiddleName,
+            string NewPhoneNumber, string NewAddress, string NewDescription) 
+        {
+            using (PersonContext context = new PersonContext())
+            {
+                Person PersonNow = context.Persons.Where(x => x.Id == id).First();
+                PersonNow.Name = NewName;
+                PersonNow.LastName = NewLastName;
+                PersonNow.MiddleName = NewMiddleName;
+                PersonNow.PhoneNumber = NewPhoneNumber;
+                PersonNow.Address = NewAddress;
+                PersonNow.Description = NewDescription;
+                context.SaveChanges();
+            }
+            
+            return Redirect("~/"); //возврат к главной странице
+        }
+        /// <summary>
+        /// Обработка кнопки удаления контакта
         /// </summary>
         /// <param name="id">Идентификатор контакта</param>
         /// <returns></returns>
@@ -102,25 +129,6 @@ namespace WebPhoneBook_2._0.Controllers
                 newcontext.Persons.Remove(PersonDelete);
                 newcontext.SaveChanges();
             }
-            //return View(); //после удаления, обновление страницы
-            return Ok(); //возврат статуса 200
         }
-        
-
-        /// <summary>
-        /// Метод получение данных из файла (уже не актуально, так как выгрузка напрямую из БД)
-        /// </summary>
-        /// <returns></returns>
-        private List<Person> GetPersonsFromDatabase()
-        {
-            string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "People.json");
-            string jsonContent = System.IO.File.ReadAllText(jsonFilePath);
-            List<Person> DisplayPersons = JsonConvert.DeserializeObject<List<Person>>(jsonContent);
-            return DisplayPersons;
-        }
-        
-      
-
-       
     }
 }
