@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using WebPhoneBook_2._0;
 using WebPhoneBook_2._0.AuthPersonApp;
@@ -11,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IPersonData, PersonData>();
+builder.Services.AddMvc();
 builder.Services.AddDbContext<PersonDbContext>(options => options.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB; 
                                             DataBase = [PersonDB]; 
                                             Trusted_connection = true;"));
@@ -20,12 +24,12 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var s = scope.ServiceProvider;
-    var c = s.GetRequiredService<PersonContext>();
-    DbInitializer.Initialize(c);
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var s = scope.ServiceProvider;
+//    var c = s.GetRequiredService<PersonContext>();
+//    DbInitializer.Initialize(c);
+//}
 
 if (!app.Environment.IsDevelopment())
 {
