@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+//using System.Text.Json.Serialization;
 
 namespace WebPhoneBook_2._0
 {
@@ -44,16 +45,26 @@ namespace WebPhoneBook_2._0
         public string Description { get { return description; } set { description = value; } }
 
         [JsonConstructor]
-        public Person(string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
+        public Person(int id, string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
         {
             //id уже не нужно присваивать в конструкторе, так как это произойдет автоматически при добавлении в БД
-            //id = Id; 
+            id = Id;
             name = Name;
             lastname = LastName;
             middlename = MiddleName;
             phonenumber = PhoneNumber;
             address = Address;
             description = Description;
+        }
+
+        public Person(string name, string lastname, string middlename, string phonenumber, string address, string description)
+        {
+            this.name = name;
+            this.lastname = lastname;
+            this.middlename = middlename;
+            this.phonenumber = phonenumber;
+            this.address = address;
+            this.description = description;
         }
     }
 }

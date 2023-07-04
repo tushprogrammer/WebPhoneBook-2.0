@@ -14,28 +14,36 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.AspNetCore.Mvc.Core.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPhoneBook_2._0.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebPhoneBook_2._0.Controllers
 {
     public class BookController : Controller
     {
-        List<Person> Persons;
+        //List<Person> Persons;
+        private readonly IPersonData Persons;
+        public BookController(IPersonData persons)
+        {
+            Persons = persons;
+        }
 
         //вызов базовой страницы
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            ViewBag.PersonsContext = new PersonContext().Persons;
+            ViewBag.PersonsContext = Persons.GetPeople();
             return View();
         }
 
         //вызов страницы контакта 
         public IActionResult Person(string id)
         {
-            int h_id = Convert.ToInt32(id);
-            Persons = new PersonContext().Persons.ToList();
+            int h_id = Convert.ToInt32(id) - 1;
+            IEnumerable<Person> People = Persons.GetPeople();
             PersonModel personModel = new PersonModel
             {
-                Person = Persons[h_id - 1]
+                Person = People.First(Person => Person.Id == h_id),
             };
             return View("Person", personModel);
         }
@@ -47,9 +55,9 @@ namespace WebPhoneBook_2._0.Controllers
         //вызов страницы изменения контакта
         public IActionResult EditPerson(int id)
         {
-            Persons = new PersonContext().Persons.ToList();
+            IEnumerable<Person> People = Persons.GetPeople();
             Person personNow
-                = Persons[id-1];
+                = People.First(Person => Person.Id == id);
             ViewBag.PersonNow = personNow;
             return View();
         }
