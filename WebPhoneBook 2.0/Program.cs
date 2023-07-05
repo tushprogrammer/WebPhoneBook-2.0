@@ -9,6 +9,7 @@ using WebPhoneBook_2._0;
 using WebPhoneBook_2._0.AuthPersonApp;
 using WebPhoneBook_2._0.ContextFolder;
 using WebPhoneBook_2._0.Data;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,13 @@ builder.Services.AddDbContext<PersonDbContext>(options => options.UseSqlServer(@
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<PersonDbContext>()
     .AddDefaultTokenProviders();
-
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 6; // минимальное количество знаков в пароле
+    options.Lockout.MaxFailedAccessAttempts = 10; // количество попыток о блокировки
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+    options.Lockout.AllowedForNewUsers = true;
+});
 var app = builder.Build();
 
  app.UseAuthentication();
@@ -60,12 +67,11 @@ public static class DbInitializer
 
         if (context.Persons.Any()) return;
 
-        var sections = new List<Person>()
-        {
-                new Person(1,"Марк1","sd", "sdf","sfdgh", "sdg","+7" ),
-                new Person(2,"Марк2","sd", "sdf","sfdgh", "sdg","+7" ),
-                new Person(3,"Марк3","sd", "sdf","sfdgh", "sdg","+7" ),
-            };
+       
+        string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "People.json");
+        string jsonContent = System.IO.File.ReadAllText(jsonFilePath);
+        List<Person> sections = JsonConvert.DeserializeObject<List<Person>>(jsonContent);
+
         using (var trans = context.Database.BeginTransaction())
         {
             foreach (Person section in sections)
