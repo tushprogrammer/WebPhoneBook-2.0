@@ -47,7 +47,6 @@ namespace WebPhoneBook_2._0
         [JsonConstructor]
         public Person(int id, string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
         {
-            //id уже не нужно присваивать в конструкторе, так как это произойдет автоматически при добавлении в БД
             id = Id;
             name = Name;
             lastname = LastName;
@@ -57,14 +56,16 @@ namespace WebPhoneBook_2._0
             description = Description;
         }
 
-        public Person(string name, string lastname, string middlename, string phonenumber, string address, string description)
+        public Person(string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
         {
-            this.name = name;
-            this.lastname = lastname;
-            this.middlename = middlename;
-            this.phonenumber = phonenumber;
-            this.address = address;
-            this.description = description;
+            //id уже не нужно присваивать в конструкторе, так как это произойдет автоматически при добавлении в БД
+            //id = Id;
+            name = Name;
+            lastname = LastName;
+            middlename = MiddleName;
+            phonenumber = PhoneNumber;
+            address = Address;
+            description = Description;
         }
     }
 }

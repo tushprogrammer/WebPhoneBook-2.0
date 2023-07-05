@@ -1,4 +1,5 @@
-﻿using WebPhoneBook_2._0.ContextFolder;
+﻿using Microsoft.Extensions.FileSystemGlobbing.Internal.PathSegments;
+using WebPhoneBook_2._0.ContextFolder;
 
 namespace WebPhoneBook_2._0.Data
 {
@@ -12,6 +13,7 @@ namespace WebPhoneBook_2._0.Data
         }
         public IEnumerable<Person> GetPeople()
         {
+            List<Person> people = Context.Persons.ToList();
             return Context.Persons;
         }
         public void AddPerson(Person person)

@@ -32,7 +32,8 @@ namespace WebPhoneBook_2._0.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            ViewBag.PersonsContext = Persons.GetPeople();
+            List<Person> people = Persons.GetPeople().ToList();
+            ViewBag.PersonsContext = people;
             return View();
         }
 
@@ -75,13 +76,10 @@ namespace WebPhoneBook_2._0.Controllers
         public IActionResult AddNewPerson(string Name, string LastName, string MiddleName, 
             string PhoneNumber, string Address, string Description)
         {
-            using (PersonContext context = new PersonContext())
-            {
-                Person NewPerson = new Person(Name, LastName, MiddleName, 
-                    PhoneNumber, Address, Description);
-                context.Add(NewPerson);
-                context.SaveChanges();
-            }
+            Person NewPerson = new Person(Name, LastName, MiddleName,
+                PhoneNumber, Address, Description);
+            Persons.AddPerson(NewPerson);
+
             return Redirect("~/"); //возврат к первой странице
         }
 
@@ -99,17 +97,18 @@ namespace WebPhoneBook_2._0.Controllers
         public IActionResult EditPersonContext(int id, string NewName, string NewLastName, string NewMiddleName,
             string NewPhoneNumber, string NewAddress, string NewDescription) 
         {
-            using (PersonContext context = new PersonContext())
-            {
-                Person PersonNow = context.Persons.Where(x => x.Id == id).First();
-                PersonNow.Name = NewName;
-                PersonNow.LastName = NewLastName;
-                PersonNow.MiddleName = NewMiddleName;
-                PersonNow.PhoneNumber = NewPhoneNumber;
-                PersonNow.Address = NewAddress;
-                PersonNow.Description = NewDescription;
-                context.SaveChanges();
-            }
+            //
+            //using (PersonDbContext context = new PersonDbContext())
+            //{
+            //    Person PersonNow = context.Persons.Where(x => x.Id == id).First();
+            //    PersonNow.Name = NewName;
+            //    PersonNow.LastName = NewLastName;
+            //    PersonNow.MiddleName = NewMiddleName;
+            //    PersonNow.PhoneNumber = NewPhoneNumber;
+            //    PersonNow.Address = NewAddress;
+            //    PersonNow.Description = NewDescription;
+            //    context.SaveChanges();
+            //}
             
             return Redirect("~/"); //возврат к главной странице
         }
@@ -131,12 +130,7 @@ namespace WebPhoneBook_2._0.Controllers
         /// <param name="id"></param>
         private void DeletePersonContext(int id)
         {
-            using (PersonContext newcontext = new PersonContext())
-            {
-                Person PersonDelete = newcontext.Persons.Where(x => x.Id == id).First();
-                newcontext.Persons.Remove(PersonDelete);
-                newcontext.SaveChanges();
-            }
+            Persons.RemovePerson(id);
         }
     }
 }

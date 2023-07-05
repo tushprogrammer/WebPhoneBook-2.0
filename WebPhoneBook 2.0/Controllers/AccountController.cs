@@ -9,13 +9,14 @@ namespace WebPhoneBook_2._0.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-
+        
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
         }
+
         #region Вход
         [HttpGet]
         public IActionResult Login(string returnUrl) //открытие страницы входа
@@ -47,7 +48,7 @@ namespace WebPhoneBook_2._0.Controllers
                 }
 
             }
-
+            
             ModelState.AddModelError("", "Пользователь не найден");
             return View(model); //если не найден, повторная попытка
         }
@@ -57,7 +58,7 @@ namespace WebPhoneBook_2._0.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View(new UserRegistration());
+            return View("Registration", new UserRegistration());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -71,9 +72,9 @@ namespace WebPhoneBook_2._0.Controllers
                 if (createResult.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Book");
                 }
-                else//иначе
+                else //если регистрация не удалась
                 {
                     foreach (var identityError in createResult.Errors)
                     {
@@ -82,7 +83,7 @@ namespace WebPhoneBook_2._0.Controllers
                 }
             }
 
-            return View(model);
+            return View("Registration",model);
         }
         #endregion
 
