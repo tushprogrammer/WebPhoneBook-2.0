@@ -16,7 +16,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IPersonData, PersonData>();
 builder.Services.AddMvc();
 builder.Services.AddDbContext<PersonDbContext>(options => options.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB; 
-                                            DataBase = [PersonDB]; 
+                                            DataBase = [PersonDB3]; 
                                             Trusted_connection = true;"));
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<PersonDbContext>()
@@ -24,12 +24,14 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 var app = builder.Build();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var s = scope.ServiceProvider;
-//    var c = s.GetRequiredService<PersonContext>();
-//    DbInitializer.Initialize(c);
-//}
+ app.UseAuthentication();
+
+using (var scope = app.Services.CreateScope())
+{
+    var s = scope.ServiceProvider;
+    var c = s.GetRequiredService<PersonDbContext>();
+    DbInitializer.Initialize(c);
+}
 
 if (!app.Environment.IsDevelopment())
 {
@@ -43,7 +45,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
@@ -53,7 +54,7 @@ app.Run();
 
 public static class DbInitializer
 {
-    public static void Initialize(PersonContext context)
+    public static void Initialize(PersonDbContext context)
     {
         context.Database.EnsureCreated();
 
@@ -67,13 +68,13 @@ public static class DbInitializer
             };
         using (var trans = context.Database.BeginTransaction())
         {
-            foreach (var section in sections)
+            foreach (Person section in sections)
             {
                 context.Persons.Add(section);
             }
-            context.Database.ExecuteSql($"SET IDENTITY_INSERT [PersonDb].[Persons] ON");
+            context.Database.ExecuteSql($"SET IDENTITY_INSERT [Persons] OFF");
             context.SaveChanges();
-            context.Database.ExecuteSql($"SET IDENTITY_INSERT [PersonDb].[Persons] OFF");
+            context.Database.ExecuteSql($"SET IDENTITY_INSERT [Persons] ON");
             trans.Commit();
         }
 
