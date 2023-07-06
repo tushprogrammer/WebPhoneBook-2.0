@@ -40,7 +40,7 @@ namespace WebPhoneBook_2._0.Controllers
         //вызов страницы контакта 
         public IActionResult Person(string id)
         {
-            int h_id = Convert.ToInt32(id) - 1;
+            int h_id = Convert.ToInt32(id);
             IEnumerable<Person> People = Persons.GetPeople();
             PersonModel personModel = new PersonModel
             {
@@ -49,11 +49,13 @@ namespace WebPhoneBook_2._0.Controllers
             return View("Person", personModel);
         }
         //вызов страницы добавления контакта
+        [HttpGet, Authorize]
         public IActionResult AddPerson()
         {
             return View();
         }
         //вызов страницы изменения контакта
+        [HttpGet, Authorize]
         public IActionResult EditPerson(int id)
         {
             IEnumerable<Person> People = Persons.GetPeople();
@@ -118,7 +120,7 @@ namespace WebPhoneBook_2._0.Controllers
         /// <param name="id">Идентификатор контакта</param>
         /// <returns></returns>
         //[HttpDelete("{id}")]
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult DeletePerson(int id)
         {
             DeletePersonContext(id);

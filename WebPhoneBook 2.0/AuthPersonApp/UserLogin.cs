@@ -9,7 +9,7 @@ namespace WebPhoneBook_2._0.AuthPersonApp
 
         [Required, DataType(DataType.Password)]
         public string Password { get; set; } //пароль
-
+        
         public string ReturnUrl { get; set; } //возвратная ссылка после авторизации
     }
 }

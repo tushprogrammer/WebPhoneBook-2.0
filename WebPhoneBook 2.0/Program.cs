@@ -29,6 +29,16 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
     options.Lockout.AllowedForNewUsers = true;
 });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // конфигурация Cookie с целью использования их для хранения авторизации
+    options.Cookie.HttpOnly = true;
+    //options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.SlidingExpiration = true;
+});
+
 var app = builder.Build();
 
  app.UseAuthentication();

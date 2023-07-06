@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using WebPhoneBook_2._0.AuthPersonApp;
 
 namespace WebPhoneBook_2._0.Controllers
@@ -18,9 +20,13 @@ namespace WebPhoneBook_2._0.Controllers
         }
 
         #region Вход
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult Login(string returnUrl) //открытие страницы входа
         {
+            if (returnUrl is null)
+            {
+                returnUrl = "/Book/Index";
+            }
             return View(new UserLogin()
             {
                 ReturnUrl = returnUrl
@@ -55,7 +61,7 @@ namespace WebPhoneBook_2._0.Controllers
         #endregion
 
         #region Регистрация 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IActionResult Register()
         {
             return View("Registration", new UserRegistration());
@@ -88,17 +94,26 @@ namespace WebPhoneBook_2._0.Controllers
         #endregion
 
         #region Выход
-        [HttpPost, ValidateAntiForgeryToken]
+        //[HttpPost, ValidateAntiForgeryToken]
+        //public IActionResult Logout()
+        //{
+        //    _signInManager.SignOutAsync();
+        //    return RedirectToAction("Index", "Book");
+        //}
+        [HttpPost, ValidateAntiForgeryToken, Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Book");
         }
         #endregion
 
-
-        public IActionResult Index() => View(_roleManager.Roles.ToList()); //вывод всех доступных ролей в системе
-        public IActionResult Create() => View(); //открыть страницу создания роли
+        //(Пока самой view нет)
+        //public IActionResult Index() => View(_roleManager.Roles.ToList()); //вывод всех доступных ролей в системе 
+        public IActionResult CreateRole()
+        {
+            return View(); //открыть страницу создания роли
+        } 
 
         /// <summary>
         /// Метод создания роли
@@ -106,14 +121,14 @@ namespace WebPhoneBook_2._0.Controllers
         /// <param name="name">Имя новой роли</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create(string name)
+        public async Task<IActionResult> CreateRole(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {
                 IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(name));
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Book");
                 }
                 else
                 {
