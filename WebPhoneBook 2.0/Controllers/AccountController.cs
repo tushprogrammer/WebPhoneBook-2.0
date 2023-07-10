@@ -108,9 +108,11 @@ namespace WebPhoneBook_2._0.Controllers
         }
         #endregion
 
-        //(Пока самой view нет)
-        //public IActionResult Index() => View(_roleManager.Roles.ToList()); //вывод всех доступных ролей в системе 
-        public IActionResult CreateRole()
+        [Authorize(Roles = "Admin")]
+        public IActionResult Index() //вывод всех доступных ролей в системе 
+        {
+            return View(_roleManager.Roles.ToList());
+        }
         {
             return View(); //открыть страницу создания роли
         } 
