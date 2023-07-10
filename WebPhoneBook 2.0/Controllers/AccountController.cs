@@ -205,5 +205,20 @@ namespace WebPhoneBook_2._0.Controllers
             }
             return View(name);
         }
+
+        #endregion
+
+        #region Удаление пользователя
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            User user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                _userManager.DeleteAsync(user);
+            }
+            return RedirectToAction("UserList");
+        }
+        #endregion
+
     }
 }

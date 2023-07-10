@@ -1,0 +1,26 @@
+﻿@model IEnumerable<WebPhoneBook_2._0.AuthPersonApp.User>
+
+<h2>Список пользователей</h2>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Имя</th>
+            <th>Адрес электронной почты</th>
+            <th>Дополнительно</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-action="EditUser" asp-route-userid="@user.Id">Изменить роль</a> |
+                    <a class="btn btn-sm btn-primary" asp-action="DeleteUser" asp-route-userid="@user.Id">Удалить пользователя</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*<a asp-action="">Добавить пользователя</a>*@
