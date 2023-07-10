@@ -5,5 +5,7 @@
         IEnumerable<Person> GetPeople();
         void AddPerson(Person person);
         void RemovePerson(int id);
+
+        void EditPerson(int id, Person person);
     }
 }

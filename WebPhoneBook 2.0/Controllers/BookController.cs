@@ -55,16 +55,6 @@ namespace WebPhoneBook_2._0.Controllers
         {
             return View();
         }
-        //вызов страницы изменения контакта
-        [HttpGet, Authorize]
-        public IActionResult EditPerson(int id)
-        {
-            IEnumerable<Person> People = Persons.GetPeople();
-            Person personNow
-                = People.First(Person => Person.Id == id);
-            ViewBag.PersonNow = personNow;
-            return View();
-        }
 
         /// <summary>
         /// Метод добавления нового контакта
@@ -89,7 +79,7 @@ namespace WebPhoneBook_2._0.Controllers
 
         #region Изменение контакта (доделать)
 
-        
+
         
         [HttpGet, Authorize(Roles = "Admin")]
         public IActionResult EditPerson(int id) //вызов страницы изменения контакта
@@ -115,6 +105,8 @@ namespace WebPhoneBook_2._0.Controllers
         public IActionResult EditPersonContext(int id, string NewName, string NewLastName, string NewMiddleName,
             string NewPhoneNumber, string NewAddress, string NewDescription) 
         {
+            Person newdataperson = new Person(NewName, NewLastName, NewMiddleName, NewPhoneNumber, NewAddress, NewDescription);
+            Persons.EditPerson(id, newdataperson);
             //
             //using (PersonDbContext context = new PersonDbContext())
             //{
@@ -140,15 +132,6 @@ namespace WebPhoneBook_2._0.Controllers
         /// <returns></returns>
         [HttpGet, Authorize(Roles = "admin")]
         public IActionResult DeletePerson(int id)
-        {
-            DeletePersonContext(id);
-            return Redirect("~/"); //обновление главной страницы
-        }
-        /// <summary>
-        /// Метод удаления конкретного контакта
-        /// </summary>
-        /// <param name="id"></param>
-        private void DeletePersonContext(int id)
         {
             Persons.RemovePerson(id);
             return Redirect("~/"); //обновление главной страницы
