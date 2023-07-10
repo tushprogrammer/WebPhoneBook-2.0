@@ -38,6 +38,7 @@ namespace WebPhoneBook_2._0.Controllers
         }
 
         //вызов страницы контакта 
+        [AllowAnonymous]
         public IActionResult Person(string id)
         {
             int h_id = Convert.ToInt32(id);
@@ -48,9 +49,9 @@ namespace WebPhoneBook_2._0.Controllers
             };
             return View("Person", personModel);
         }
-        //вызов страницы добавления контакта
+        #region Добавление контака
         [HttpGet, Authorize]
-        public IActionResult AddPerson()
+        public IActionResult AddPerson() //вызов страницы добавления контакта
         {
             return View();
         }
@@ -84,6 +85,21 @@ namespace WebPhoneBook_2._0.Controllers
 
             return Redirect("~/"); //возврат к первой странице
         }
+        #endregion
+
+        #region Изменение контакта (доделать)
+
+        
+        
+        [HttpGet, Authorize(Roles = "Admin")]
+        public IActionResult EditPerson(int id) //вызов страницы изменения контакта
+        {
+            IEnumerable<Person> People = Persons.GetPeople();
+            Person personNow
+                = People.First(Person => Person.Id == id);
+            ViewBag.PersonNow = personNow;
+            return View();
+        }
 
         /// <summary>
         /// Метод изменения данных контакта
@@ -114,13 +130,15 @@ namespace WebPhoneBook_2._0.Controllers
             
             return Redirect("~/"); //возврат к главной странице
         }
+        #endregion 
+
+
         /// <summary>
-        /// Обработка кнопки удаления контакта
+        /// Удаление контакта
         /// </summary>
         /// <param name="id">Идентификатор контакта</param>
         /// <returns></returns>
-        //[HttpDelete("{id}")]
-        [HttpGet, Authorize]
+        [HttpGet, Authorize(Roles = "admin")]
         public IActionResult DeletePerson(int id)
         {
             DeletePersonContext(id);
@@ -133,6 +151,8 @@ namespace WebPhoneBook_2._0.Controllers
         private void DeletePersonContext(int id)
         {
             Persons.RemovePerson(id);
+            return Redirect("~/"); //обновление главной страницы
         }
+     
     }
 }
