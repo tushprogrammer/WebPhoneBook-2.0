@@ -109,6 +109,7 @@ namespace WebPhoneBook_2._0.Controllers
         }
         #endregion
 
+        #region Вывод списков
         [Authorize(Roles = "Admin")]
         public IActionResult Index() //вывод всех доступных ролей в системе 
         {
@@ -120,6 +121,7 @@ namespace WebPhoneBook_2._0.Controllers
         {
             return View("Users",_userManager.Users.ToList());
         }
+        #endregion
 
         #region Редактирование ролей у пользователя
         [Authorize(Roles = "Admin")]
@@ -144,7 +146,7 @@ namespace WebPhoneBook_2._0.Controllers
             return NotFound();
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUser(string userId, List<string> roles)
         {
             // получаем пользователя
@@ -186,7 +188,7 @@ namespace WebPhoneBook_2._0.Controllers
         /// </summary>
         /// <param name="name">Имя новой роли</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateRole(string name)
         {
             if (!string.IsNullOrEmpty(name))
@@ -209,7 +211,22 @@ namespace WebPhoneBook_2._0.Controllers
 
         #endregion
 
+        #region Удаление роли
+        [HttpPost, Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            IdentityRole role = await _roleManager.FindByIdAsync(id);
+            if (role != null)
+            {
+                IdentityResult result = await _roleManager.DeleteAsync(role);
+            }
+            return RedirectToAction("Index");
+        }
+
+        #endregion
+
         #region Удаление пользователя
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
             User user = await _userManager.FindByIdAsync(userId);
