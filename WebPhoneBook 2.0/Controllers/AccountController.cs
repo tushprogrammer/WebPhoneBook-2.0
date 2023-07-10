@@ -29,7 +29,7 @@ namespace WebPhoneBook_2._0.Controllers
             }
             return View(new UserLogin()
             {
-                ReturnUrl = returnUrl
+                //ReturnUrl = returnUrl
             });
         }
 
@@ -45,10 +45,10 @@ namespace WebPhoneBook_2._0.Controllers
 
                 if (loginResult.Succeeded) //если попытка успешна
                 {
-                    if (Url.IsLocalUrl(model.ReturnUrl)) // если при входе была переадресация с другой страницы
-                    {
-                        return Redirect(model.ReturnUrl); //возврат на исходную страницу
-                    }
+                    //if (Url.IsLocalUrl(model.ReturnUrl)) // если при входе была переадресация с другой страницы
+                    //{
+                    //    return Redirect(model.ReturnUrl); //возврат на исходную страницу
+                    //}
 
                     return RedirectToAction("Index", "Book"); // иначе возврат на стартовую страницу
                 }
