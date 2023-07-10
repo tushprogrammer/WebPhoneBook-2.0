@@ -3,7 +3,7 @@
 <div class="text-center">
     <h1 class="display-4">Записная книжка</h1>
 </div>
-<a asp-action="AddPerson">Добавить</a>
+
 <table class="table">
             <thead class="thead-light">
                 <tr>
@@ -11,7 +11,11 @@
                     <th>Имя</th>
                     <th>Фамилия</th>
                     <th>Отчество</th>
-                    <th>Дополнительно</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th>Дополнительно</th>
+                    }
+                    
                 </tr>
             </thead>
             <tbody>
@@ -31,13 +35,17 @@
                         <td>
                                 @Html.DisplayFor(modelItem => item.MiddleName)
                         </td>
-                        <td>
-                            <a asp-action="DeletePerson" asp-route-id="@item.Id" asp-controller="Book">Удалить</a> |
-                            <a asp-action="EditPerson" asp-route-id="@item.Id" asp-controller="Book">Изменить</a>
-                            @*<form action="DeletePerson(@item.Id)" method="delete">
-                                <input type="submit" value="Удалить">
-                            </form>*@
-                        </td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a asp-action="DeletePerson" asp-route-id="@item.Id" asp-controller="Book">Удалить</a> |
+                                <a asp-action="EditPerson" asp-route-id="@item.Id" asp-controller="Book">Изменить</a>
+                                @*<form action="DeletePerson(@item.Id)" method="delete">
+                                    <input type="submit" value="Удалить">
+                                </form>*@
+                            </td>
+                        }
+                        
                       
                     </tr>
                 }

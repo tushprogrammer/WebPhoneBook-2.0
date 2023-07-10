@@ -1,14 +1,24 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-<div class="btn-group pull-right" style="width: 650px;">
-    <a class="navbar-brand" href="~/">В начало</a>
-    <a class="navbar-brand" href="/Home/Add">Добавить автомобиль</a>
+<div class="btn-group pull-right" style="width: 80%;">
+   @* <a class="navbar-brand" href="~/">В начало</a>*@
     <a class="navbar-brand" herf="#">@User.Identity.Name в системе</a>
+
+        <a class="navbar-brand" asp-action="AddPerson" asp-controller="Book">Добавить Контакт</a>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="navbar-brand"  asp-action="CreateRole" asp-controller="Account">Добавить роль</a>
+            <a class="navbar-brand" asp-action="UserList" asp-controller="Account">Список пользователей</a>
+        }
+
+
+
         @*<a asp-action="Logout" asp-controller="Account">Выход</a>*@
-    <form method="post" asp-controller="Account" asp-action="Logout" id="logoutform" asp-antiforgery="true">
-        <a class="navbar-brand" href="#" onclick="document.getElementById('logoutform').submit()">Выход</a>
+        <form class="navbar-brand" method="post" asp-controller="Account" asp-action="Logout" id="logoutform" asp-antiforgery="true">
+            <a class="navbar-brand" href="#" onclick="document.getElementById('logoutform').submit()">Выход</a>
     </form>
-        <a asp-action="CreateRole" asp-controller="Account">Добавить роль</a>
+        
 </div>
 }
 else

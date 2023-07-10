@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using WebPhoneBook_2._0.AuthPersonApp;
+using WebPhoneBook_2._0.Models;
 
 namespace WebPhoneBook_2._0.Controllers
 {
@@ -176,8 +177,8 @@ namespace WebPhoneBook_2._0.Controllers
         public IActionResult CreateRole() //открыть страницу создания роли
         {
             return View();
-        } 
-
+        }
+        
 
 
         /// <summary>
