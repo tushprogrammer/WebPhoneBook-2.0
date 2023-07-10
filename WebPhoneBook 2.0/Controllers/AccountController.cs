@@ -113,12 +113,72 @@ namespace WebPhoneBook_2._0.Controllers
         {
             return View(_roleManager.Roles.ToList());
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult UserList() //список пользователей
+        {
+            return View("Users",_userManager.Users.ToList());
+        }
+
         #region Редактирование ролей у пользователя
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUser(string userId) //окно редактирования ролей у пользователя
         {
-            return View(); //открыть страницу создания роли
+            User user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                // получем список ролей пользователя
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var allRoles = _roleManager.Roles.ToList();
+                ChangeRoleViewModel model = new ChangeRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles, //уже имеющиекся роли пользователя
+                    AllRoles = allRoles //все роли
+                };
+                return View(model);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(string userId, List<string> roles)
+        {
+            // получаем пользователя
+            User user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                // получем список ролей пользователя
+                var userRoles = await _userManager.GetRolesAsync(user);
+                // получаем все роли
+                var allRoles = _roleManager.Roles.ToList();
+                // получаем список ролей, которых у пользователя изначально не было
+                var addedRoles = roles.Except(userRoles);
+                // получаем роли, которые у пользователя убрали
+                var removedRoles = userRoles.Except(roles);
+
+                await _userManager.AddToRolesAsync(user, addedRoles);
+
+                await _userManager.RemoveFromRolesAsync(user, removedRoles);
+
+                return RedirectToAction("UserList");
+            }
+
+            return NotFound();
+        }
+        #endregion
+
+        #region Создание роли
+        
+        [Authorize(Roles = "Admin")]
+        public IActionResult CreateRole() //открыть страницу создания роли
+        {
+            return View();
         } 
+
+
 
         /// <summary>
         /// Метод создания роли
