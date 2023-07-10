@@ -113,6 +113,9 @@ namespace WebPhoneBook_2._0.Controllers
         {
             return View(_roleManager.Roles.ToList());
         }
+        #region Редактирование ролей у пользователя
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> EditUser(string userId) //окно редактирования ролей у пользователя
         {
             return View(); //открыть страницу создания роли
         } 
