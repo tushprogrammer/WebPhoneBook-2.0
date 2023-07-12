@@ -62,7 +62,7 @@ namespace WebPhoneBook_2._0.Controllers
         #endregion
 
         #region Регистрация 
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Authorize(Roles = "Admin")]
         public IActionResult Register()
         {
             return View("Registration", new UserRegistration());
@@ -78,7 +78,10 @@ namespace WebPhoneBook_2._0.Controllers
 
                 if (createResult.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
+                    if (!model.IsAdmin) //если регистрация произошла не от администратора, то выполнить вход за нового пользователя
+                    {
+                        await _signInManager.SignInAsync(user, false);
+                    }                    
                     return RedirectToAction("Index", "Book");
                 }
                 else //если регистрация не удалась
@@ -226,10 +229,11 @@ namespace WebPhoneBook_2._0.Controllers
         #endregion
 
         #region Удаление пользователя
-        [HttpPost, Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteUser(string userId)
+
+        [HttpGet, Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(string userid)
         {
-            User user = await _userManager.FindByIdAsync(userId);
+            User user = await _userManager.FindByIdAsync(userid);
             if (user != null)
             {
                 _userManager.DeleteAsync(user);

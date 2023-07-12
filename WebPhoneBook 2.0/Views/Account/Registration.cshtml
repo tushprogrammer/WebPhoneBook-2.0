@@ -1,7 +1,15 @@
 ﻿@using WebPhoneBook_2._0.AuthPersonApp
 @model UserRegistration
 @{
-    ViewData["Title"] = "Регистрация";
+    if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        ViewData["Title"] = "Добавление нового пользователя";
+    }
+    else
+    {
+        ViewData["Title"] = "Регистрация";
+    }
+    
 }
 
 <div class="container">
@@ -11,6 +19,16 @@
 
             <form asp-action="Register" asp-antiforgery="true" class="form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @{
+                    if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <input asp-for="IsAdmin" type="hidden" value="true"/>
+                    }
+                    else
+                    {
+                        <input asp-for="IsAdmin" type="hidden" value="false" />
+                    }
+                }
                 <div class="col-xs-12">
                     <div class="form-group">
                         <input asp-for="LoginProp" class="form-control" placeholder="Логин" />

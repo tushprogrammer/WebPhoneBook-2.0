@@ -16,11 +16,11 @@
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
                 <td>
-                    <a class="btn btn-sm btn-primary" asp-action="EditUser" asp-route-userid="@user.Id">Изменить роль</a> |
-                    <a class="btn btn-sm btn-primary" asp-action="DeleteUser" asp-route-userid="@user.Id">Удалить пользователя</a>
+                    <a class="btn btn-sm btn-primary" asp-action= "EditUser"   asp-route-userid= "@user.Id">Изменить роль</a> |
+                    <a class="btn btn-sm btn-primary" asp-action= "DeleteUser" asp-route-userid= "@user.Id">Удалить пользователя</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-@*<a asp-action="">Добавить пользователя</a>*@
+<a class="btn btn-sm btn-primary" asp-action="Register">Добавить пользователя</a>

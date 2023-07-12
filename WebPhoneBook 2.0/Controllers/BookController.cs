@@ -77,7 +77,7 @@ namespace WebPhoneBook_2._0.Controllers
         }
         #endregion
 
-        #region Изменение контакта (доделать)
+        #region Изменение контакта
 
 
         
@@ -130,7 +130,7 @@ namespace WebPhoneBook_2._0.Controllers
         /// </summary>
         /// <param name="id">Идентификатор контакта</param>
         /// <returns></returns>
-        [HttpGet, Authorize(Roles = "admin")]
+        [HttpGet, Authorize(Roles = "Admin")]
         public IActionResult DeletePerson(int id)
         {
             Persons.RemovePerson(id);

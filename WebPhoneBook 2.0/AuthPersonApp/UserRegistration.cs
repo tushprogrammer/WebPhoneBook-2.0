@@ -12,5 +12,6 @@ namespace WebPhoneBook_2._0.AuthPersonApp
 
         [DataType(DataType.Password), Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
