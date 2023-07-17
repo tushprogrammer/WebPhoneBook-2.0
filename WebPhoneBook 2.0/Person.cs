@@ -45,7 +45,7 @@ namespace WebPhoneBook_2._0
         public string Description { get { return description; } set { description = value; } }
 
         [JsonConstructor]
-        public Person(int id, string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
+        public Person(int Id, string Name, string LastName, string MiddleName, string PhoneNumber, string Address, string Description)
         {
             id = Id;
             name = Name;

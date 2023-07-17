@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IPersonData, PersonData>();
+builder.Services.AddTransient<IPersonData, PersonDataApi>();
 builder.Services.AddMvc();
 builder.Services.AddDbContext<PersonDbContext>(options => options.UseSqlServer(@"Server = (localdb)\MSSQLLocalDB; 
                                             DataBase = [PersonDB3]; 
