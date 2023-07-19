@@ -107,19 +107,6 @@ namespace WebPhoneBook_2._0.Controllers
         {
             Person newdataperson = new Person(NewName, NewLastName, NewMiddleName, NewPhoneNumber, NewAddress, NewDescription);
             Persons.EditPerson(id, newdataperson);
-            //
-            //using (PersonDbContext context = new PersonDbContext())
-            //{
-            //    Person PersonNow = context.Persons.Where(x => x.Id == id).First();
-            //    PersonNow.Name = NewName;
-            //    PersonNow.LastName = NewLastName;
-            //    PersonNow.MiddleName = NewMiddleName;
-            //    PersonNow.PhoneNumber = NewPhoneNumber;
-            //    PersonNow.Address = NewAddress;
-            //    PersonNow.Description = NewDescription;
-            //    context.SaveChanges();
-            //}
-            
             return Redirect("~/"); //возврат к главной странице
         }
         #endregion 

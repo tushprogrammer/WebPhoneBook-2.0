@@ -73,7 +73,7 @@ public static class DbInitializer
 {
     public static void Initialize(PersonDbContext context)
     {
-        context.Database.EnsureCreated();
+        context.Database.EnsureCreated(); //создать, если еще не создана
 
         if (context.Persons.Any()) return;
 

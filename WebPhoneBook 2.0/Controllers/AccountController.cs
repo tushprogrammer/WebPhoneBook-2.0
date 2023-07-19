@@ -130,7 +130,7 @@ namespace WebPhoneBook_2._0.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUser(string userId) //окно редактирования ролей у пользователя
         {
-            User user = await _userManager.FindByIdAsync(userId);
+            User user = await _userManager.FindByIdAsync(userId);           
             if (user != null)
             {
                 // получем список ролей пользователя
