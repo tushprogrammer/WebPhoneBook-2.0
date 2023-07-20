@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Sockets;
 using System.Reflection.Metadata;
 using System.Text;
 
@@ -18,15 +19,26 @@ namespace WebPhoneBook_2._0.Data
 
         public IEnumerable<Person> GetPeople()
         {
-
-            string json = httpClient.GetStringAsync(url).Result;
-            return JsonConvert.DeserializeObject<IEnumerable<Person>>(json);
+            try
+            {
+                string json = httpClient.GetStringAsync(url).Result;
+                return JsonConvert.DeserializeObject<IEnumerable<Person>>(json);
+            }            
+            catch (SocketException E)
+            {
+                //MessageBox.Show("Приложение Api не запущено");
+            }
+            return null;
 
         }
 
         public void AddPerson(Person person)
         {
             var re = httpClient.PostAsJsonAsync(url, person).Result;
+            if (re.IsSuccessStatusCode)
+            {
+
+            }
             //тоже самое, но без кодировки и типа отправляемых данных
             //var result = httpClient.PostAsync(url, 
             //    new StringContent(JsonConvert.SerializeObject(person), Encoding.UTF8, "application/json" ))
